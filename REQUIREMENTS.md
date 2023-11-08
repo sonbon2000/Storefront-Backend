@@ -18,6 +18,12 @@ This API serves as the backend for a storefront application. It provides the nec
 
 - `GET /order/:userid` - Retrieve order by user
 
+### Order_Product
+
+- `order_id` (integer, primary key, foreign key referencing the `orders` table)
+- `product_id` (integer, primary key, foreign key referencing the `products` table)
+- `quantity` (integer, required)
+
 ### Users
 
 - `POST /login` - User login
