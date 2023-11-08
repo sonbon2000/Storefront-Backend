@@ -14,6 +14,10 @@ This API serves as the backend for a storefront application. It provides the nec
 - `UPDATE /product/update` - Update a product by Id
 - `DELETE /product/:id` - Delete a product by Id
 
+### Orders
+
+- `GET /order/:userid` - Retrieve order by user
+
 ### Users
 
 - `POST /login` - User login
@@ -31,6 +35,12 @@ The database schema should include the following tables:
 - `name` (character varying(256), required)
 - `price` (numeric(10,2), required)
 - `category` (character varying(256))
+
+### Orders
+
+- `id` (integer, primary key, DEFAULT nextval('"Orders_id_seq"'::regclass))
+- `user_id` (integer, foreign key referencing the `users` table)
+- `status_of_order` (character varying(1), required )
 
 ### Users
 
