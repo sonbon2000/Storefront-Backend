@@ -14,29 +14,25 @@ const login = async (request: Request, response: Response) => {
     const check = await userStore.login(account, password);
     if (check) {
       const token = generateAccessToken(account);
-      response.status(200);
-      response.json({ token });
+      response.status(200).json({ token });
     } else {
-      response.status(400);
-      response.json("Account or password not valid");
+      response.status(400).json("Account or password not valid");
     }
   } catch (error) {
-    response.status(400);
-    response.json("Have error");
+    response.status(400).json("Error happen");
   }
 };
 
-const index = async (request: Request, response: Response) => {
+const showAllUsers = async (request: Request, response: Response) => {
   try {
-    const users = await userStore.index();
-    response.status(200);
-    response.json(users);
+    const users = await userStore.getAllUsers();
+    response.status(200).json(users);
   } catch (error) {
     response.status(401);
   }
 };
 
-const show = async (request: Request, response: Response) => {
+const showUserById = async (request: Request, response: Response) => {
   try {
     let id: number = parseInt(request.params.id);
     const user = await userStore.getById(id);
@@ -46,7 +42,7 @@ const show = async (request: Request, response: Response) => {
   }
 };
 
-const insert = async (request: Request, response: Response) => {
+const addUser = async (request: Request, response: Response) => {
   try {
     const user: User = {
       id: 0,
@@ -55,7 +51,7 @@ const insert = async (request: Request, response: Response) => {
       password: request.body.password,
       account: request.body.account,
     };
-    const result = await userStore.insert(user);
+    const result = await userStore.add(user);
     switch (result) {
       case -1:
         response.status(400);
@@ -75,9 +71,9 @@ const insert = async (request: Request, response: Response) => {
 
 const userController = (app: express.Application) => {
   app.post("/login", login);
-  app.get("/user/all", verifyAuthToken, index);
-  app.get("/user/show/:id", verifyAuthToken, show);
-  app.post("/user/insert", insert);
+  app.get("/user/all", verifyAuthToken, showAllUsers);
+  app.get("/user/show/:id", verifyAuthToken, showUserById);
+  app.post("/user/insert", addUser);
 };
 
 export default userController;

@@ -41,7 +41,7 @@ export class UserStore {
     }
   }
 
-  async insert(user: User): Promise<number> {
+  async add(user: User): Promise<number> {
     try {
       let checkUser = await this.getByAccount(user.account);
       if (checkUser != null && checkUser.account != "") {
@@ -54,13 +54,12 @@ export class UserStore {
           user.firstname,
           user.lastname,
           user.account,
-          hash
+          hash,
         ]);
         conn.release();
         return 0;
       }
     } catch (error) {
-      console.log("🚀 ~ file: User.ts:64 ~ UserStore ~ insert ~ error:", error);
       throw new Error(`Error: ${error}`);
     }
   }
@@ -73,11 +72,11 @@ export class UserStore {
       conn.release();
       return result.rows[0];
     } catch (error) {
-      throw new Error(`Could not get users. Error: ${error}`);
+      throw new Error(`Error: ${error}`);
     }
   }
 
-  async index(): Promise<User[]> {
+  async getAllUsers(): Promise<User[]> {
     try {
       const conn = await Client.connect();
       const sql = `SELECT * FROM "User"`;
@@ -85,7 +84,7 @@ export class UserStore {
       conn.release();
       return result.rows;
     } catch (error) {
-      throw new Error(`Could not get user. Error: ${error}`);
+      throw new Error(`Error: ${error}`);
     }
   }
 
@@ -96,7 +95,7 @@ export class UserStore {
       const result = await conn.query(sql, [id]);
       return result.rows[0];
     } catch (error) {
-      throw new Error(`Could not get users. Error: ${error}`);
+      throw new Error(`Error: ${error}`);
     }
   }
 }

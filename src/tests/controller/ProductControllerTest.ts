@@ -16,12 +16,12 @@ describe("Test api Product", () => {
     account: "TestProduct",
   };
   beforeAll(async () => {
-    userStore.insert(user);
+    userStore.add(user);
   });
 
-  describe("Test api /product/all", () => {
+  describe("Test api /product", () => {
     it("/product/all", async () => {
-      const response = await request.get("/product/all");
+      const response = await request.get("/product");
       expect(response.status).toBe(200);
     });
   });
@@ -44,7 +44,7 @@ describe("Test api Product", () => {
         .post("/product/insert")
         .set("Authorization", `Bearer ${token}`)
         .send({
-          name: "Produc Test",
+          name: "Product Test",
           price: 123,
           category: "",
         });
@@ -64,7 +64,7 @@ describe("Test api Product", () => {
         .set("Authorization", `Bearer ${token}`)
         .send({
           id: 1,
-          name: "Produc Test",
+          name: "Product Test",
           price: 123,
           category: "",
         });

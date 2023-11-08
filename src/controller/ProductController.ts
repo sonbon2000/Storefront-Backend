@@ -7,10 +7,9 @@ const productStore = new ProductStore();
 const getAllProduct = async (request: Request, response: Response) => {
   try {
     const products = await productStore.showAll();
-    response.json(products);
+    response.status(200).json(products);
   } catch (error) {
-    response.status(400);
-    response.json("Have error");
+    response.status(400).json("Error happen");
   }
 };
 
@@ -18,10 +17,9 @@ const getProductById = async (request: Request, response: Response) => {
   try {
     let id: number = parseInt(request.params.id);
     const product: Product = await productStore.showById(id);
-    response.json(product);
+    response.status(200).json(product);
   } catch (error) {
-    response.status(400);
-    response.send("Product id not valid");
+    response.status(400).send("Product is invalid");
   }
 };
 
@@ -34,11 +32,10 @@ const addProduct = async (request: Request, response: Response) => {
       category: isNaN(request.body.category) ? request.body.category : "",
     };
     const result = await productStore.add(product);
-    response.status(200);
-    response.json(result);
+    response.status(200).json(result);
   } catch (error) {
     response.status(400);
-    response.send("Param not valid");
+    response.send("Product cannot be added");
   }
 };
 
@@ -51,11 +48,9 @@ const updateProduct = async (request: Request, response: Response) => {
       category: isNaN(request.body.category) ? request.body.category : "",
     };
     const result = await productStore.update(product);
-    response.status(200);
-    response.json(result);
+    response.status(200).json(result);
   } catch (error) {
-    response.status(400);
-    response.send("Param not valid");
+    response.status(400).send("Product cannot be updated");
   }
 };
 
@@ -65,13 +60,12 @@ const deleteProduct = async (request: Request, response: Response) => {
     const result = await productStore.delete(id);
     response.send("Delete " + result + " record");
   } catch (error) {
-    response.status(400);
-    response.send("Product id not valid");
+    response.status(400).send("Product cannot be deleted");
   }
 };
 
 const productControllers = (app: express.Application) => {
-  app.get("/product/all", getAllProduct);
+  app.get("/product/", getAllProduct);
   app.get("/product/show/:id", getProductById);
   app.post("/product/insert", verifyAuthToken, addProduct);
   app.put("/product/update", verifyAuthToken, updateProduct);

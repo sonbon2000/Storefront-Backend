@@ -17,7 +17,7 @@ describe("Test api user", () => {
 
   describe("Test api login", () => {
     beforeEach(async () => {
-      await userStore.insert(user);
+      await userStore.add(user);
     });
     it("Login", async () => {
       const response = await request.post("/login").send({
@@ -44,7 +44,7 @@ describe("Test api user", () => {
 
   describe("Test api /user/all", () => {
     beforeEach(async () => {
-      await userStore.insert(user);
+      await userStore.add(user);
     });
     it("/user/all", async () => {
       const login = await request.post("/login").send({
@@ -68,7 +68,7 @@ describe("Test api user", () => {
 
   describe("Test api /user/show/:id", () => {
     beforeEach(async () => {
-      await userStore.insert(user);
+      await userStore.add(user);
     });
     it("/user/show/:id", async () => {
       const login = await request.post("/login").send({

@@ -5,7 +5,7 @@ const productStore = new ProductStore();
 
 describe("Tests for function in Product", () => {
   var id: Number = 0;
-  describe("test function index", () => {
+  describe("test function show All", () => {
     var expectRs = 0;
     beforeEach(async () => {
       try {
@@ -16,8 +16,8 @@ describe("Tests for function in Product", () => {
         conn.release();
       } catch (error) {}
     });
-    it("index product", async () => {
-      const products = await productStore.index();
+    it("show All products", async () => {
+      const products = await productStore.showAll();
       const length = products.length;
       expect(length).toBe(expectRs);
     });
@@ -29,7 +29,6 @@ describe("Tests for function in Product", () => {
     beforeEach(async () => {
       try {
         const conn = await Client.connect();
-        console.log("🚀 ~ file: ProductTest.ts:32 ~ beforeEach ~ Client:", Client)
         const sql = `INSERT INTO "Product" (name, price, category) VALUES ('test1', 10, 'cate1')RETURNING *`;
         const result = await conn.query(sql, []);
         id = result.rows[0].id;
@@ -37,12 +36,12 @@ describe("Tests for function in Product", () => {
       } catch (error) {}
     });
     it("Show  product", async () => {
-      const product = await productStore.show(id);
+      const product = await productStore.showById(id);
       const name = product.name;
       expect(name).toBe("test1");
     });
     afterEach(async () => {
-      await productStore.deleteById(id);
+      await productStore.delete(id);
     });
   });
 
@@ -56,13 +55,13 @@ describe("Tests for function in Product", () => {
         category: "",
       };
 
-      const result = await productStore.insert(product);
+      const result = await productStore.add(product);
       id = result[0].id;
-      const actual = await productStore.show(id);
+      const actual = await productStore.showById(id);
       expect(actual.name).toBe(product.name);
     });
     afterEach(async () => {
-      await productStore.deleteById(id);
+      await productStore.delete(id);
     });
   });
 
@@ -85,11 +84,11 @@ describe("Tests for function in Product", () => {
         category: "",
       };
       await productStore.update(product);
-      const actual = await productStore.show(id);
+      const actual = await productStore.showById(id);
       expect(actual.name).toBe(product.name);
     });
     afterEach(async () => {
-      await productStore.deleteById(id);
+      await productStore.delete(id);
     });
   });
 
@@ -105,7 +104,7 @@ describe("Tests for function in Product", () => {
       } catch (error) {}
     });
     it("Delete product", async () => {
-      const actual = await productStore.deleteById(id);
+      const actual = await productStore.delete(id);
       expect(actual).toBe(1);
     });
   });

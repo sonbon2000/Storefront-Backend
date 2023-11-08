@@ -1,6 +1,6 @@
 # Storefront Backend
 
-This project is the backend API for a storefront application. It provides the necessary endpoints to manage products, orders, and users.
+This project is second project of Udacity Full stack JS - Storefront Backend Project
 
 ## Getting Started
 
@@ -13,9 +13,8 @@ To get started with the project, follow these steps:
 
 ### Installation
 
-1. Clone the repository: `git clone https://github.com/your-username/storefront-backend.git`
-2. Navigate to the project directory: `cd storefront-backend`
-3. Install the dependencies: `npm install`
+1. Clone the repository: `git clone https://github.com/your-username/Storefront-Backend.git`
+2. Install the dependencies: `npm install`
 
 ### Database Setup
 

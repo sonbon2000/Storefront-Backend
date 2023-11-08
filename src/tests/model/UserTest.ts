@@ -14,7 +14,7 @@ const user: User = {
 describe("Tests for function in User", () => {
   describe("Test function login", () => {
     beforeEach(async () => {
-      await userStore.insert(user);
+      await userStore.add(user);
     });
     it("login", async () => {
       const actual = await userStore.login(user.account, user.password);
@@ -31,7 +31,7 @@ describe("Tests for function in User", () => {
 
   describe("Test function insert", () => {
     it("insert user", async () => {
-      const result = await userStore.insert(user);
+      const result = await userStore.add(user);
       expect(result).toBe(0);
     });
 
@@ -44,7 +44,7 @@ describe("Tests for function in User", () => {
 
   describe("test function getByAccount", () => {
     beforeEach(async () => {
-      await userStore.insert(user);
+      await userStore.add(user);
     });
     it("getByAccount", async () => {
       const userActual = await userStore.getByAccount(user.account);
@@ -70,7 +70,7 @@ describe("Tests for function in User", () => {
       } catch (error) {}
     });
     it("index product", async () => {
-      const products = await userStore.index();
+      const products = await userStore.getAllUsers();
       const length = products.length;
       expect(length).toBe(expectRs);
     });
