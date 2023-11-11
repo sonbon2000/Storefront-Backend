@@ -20,6 +20,8 @@ export class OrderStore {
     try {
       let orders: Order[];
       const conn = await Client.connect();
+
+      //get order
       const sql = `SELECT * FROM "Orders" AS o WHERE o.user_id = ($1) AND o.status_of_order = '0'`;
       const result = await conn.query(sql, [idUser]);
       conn.release();

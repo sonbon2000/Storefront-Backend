@@ -8,7 +8,8 @@ const getOrderById = async (request: Request, response: Response) => {
   try {
     let userId = parseInt(request.params.userid);
     const result = await orderStore.getByUser(userId);
-    response.status(200).json(result);
+    response.status(200);
+    response.json(result);
   } catch (error) {
     response.status(400);
   }
